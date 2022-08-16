@@ -1,3 +1,10 @@
+pub mod project;
+
+use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use actix_cors::Cors;
+
+use project::ProjectHolder;
+use project::Project;
 use walkdir::{DirEntry, WalkDir};
 
 
@@ -40,13 +47,33 @@ fn get_projects_in_path(path: &str, ignore_dirs: &Vec<&str>, project_files: &Vec
     }).collect()
 
 }
-fn main() {
+
+async fn res() -> impl Responder{
     let path = "D:\\workspace\\rust";
     let ignore_dirs = vec!["node_modules", "target", ".git", "dist", "build"];
     let project_files = vec!["Cargo.toml", "package.json", "CMakeLists.txt", "pom.xml", ];
 
     let projects =  get_projects_in_path(&path, &ignore_dirs, &project_files);
+
+    HttpResponse::Ok().json(projects)
 }
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()>{
+    HttpServer::new(|| {
+        App::new()
+            .wrap(
+                Cors::permissive()
+            )
+            .route("/hello", web::get().to(res))
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+
+}
+
+
 
 #[cfg(test)]
 mod tests {
