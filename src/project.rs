@@ -1,3 +1,5 @@
+use serde::{Serialize, Deserialize};
+
 #[derive(Debug)]
 pub struct ProjectHolder {
     pub name: String,
@@ -26,7 +28,7 @@ impl ProjectHolder {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Project {
     name: String,
     path: String,
@@ -36,6 +38,10 @@ pub struct Project {
 impl Project {
     pub fn new(name: &str, path: &str) -> Self {
         Project { name: String::from(name) , path: String::from(path) , project_type: String::from("") }
+    }
+
+    pub fn new_with_type(name: &str, path: &str, project_type: &str) -> Self {
+        Project { name: String::from(name) , path: String::from(path) , project_type: String::from(project_type) }
     }
 
     pub fn set_project_type(&mut self, project_type: &str) {
