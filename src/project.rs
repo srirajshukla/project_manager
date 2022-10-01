@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct ProjectHolder {
     pub name: String,
     pub projects: Vec<Project>
@@ -10,15 +11,20 @@ impl ProjectHolder {
             projects: vec![]
         }
     }
+
+    pub fn add_project(&mut self, project: Project) {
+        self.projects.push(project);
+    }
 }
 
+#[derive(Debug)]
 pub struct Project {
     name: String,
     path: String,
 }
 
 impl Project {
-    pub fn new(name: String, path: String) -> Self {
-        Project { name, path }
+    pub fn new(name: &str, path: &str) -> Self {
+        Project { name: String::from(name) , path: String::from(path) }
     }
 }
