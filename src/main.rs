@@ -1,14 +1,12 @@
-pub mod project;
 
 use std::collections::HashMap;
 
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 use actix_cors::Cors;
 
-use project::ProjectHolder;
-use project::Project;
 use walkdir::{DirEntry, WalkDir};
-
+use project_lib::project::Project;
+use project_lib::project::ProjectHolder;
 
 fn is_blacklisted_project(entry: &DirEntry, ignore_dir: &Vec<&str>) -> bool {
     // println!("{:?}", entry.file_name().to_str());

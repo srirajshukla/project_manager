@@ -11,3 +11,11 @@ walkdir = "2.3.2"
 actix-web = "4"
 actix-cors = "0.6.2"
 serde = { version = "1.0.145", features = ["derive"] }
+
+[lib]
+name="project_lib"
+path="lib/lib.rs"
+
+[[bin]]
+name="project_web"
+path="src/main.rs"
